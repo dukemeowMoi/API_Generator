@@ -1,4 +1,4 @@
-# API_Generator
+# API Generator
  
 This application aims to provide efficient and convenient way for developers to generate API coding in NodeJS format.
 
