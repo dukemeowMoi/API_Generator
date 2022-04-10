@@ -1,0 +1,188 @@
+{
+	"name": "Online Shop",
+	"id": "onlineshop",
+	"modules": [
+		{
+			"name": "Product",
+			"id": "product",
+			"APIs": [
+				{
+					"name": "select product",
+					"id": "select_product",
+					"slug": "/select/product",
+                    "httpMethod": "get",
+					"type": "select",
+					"relatedEntity": "product",
+                    "attributes": ["product_id"]
+				},
+                {
+					"name": "list product",
+					"id": "list_product",
+					"slug": "/list/product",
+                    "httpMethod": "get",
+					"type": "select",
+					"relatedEntity": "product",
+                    "attributes": []
+				},
+                {
+					"name": "select product with category",
+					"id": "select_product_with_cate",
+					"slug": "/select/product/cate",
+                    "httpMethod": "get",
+					"type": "select",
+					"relatedEntity": "product",
+                    "attributes": ["productCate_id"]
+				},
+                {
+					"name": "insert product",
+					"id": "insert_product",
+					"slug": "/insert/product",
+                    "httpMethod": "post",
+					"type": "insert",
+					"relatedEntity": "product",
+                    "attributes": ["product_id", "product_name", "product_price", "product_description", "productCate_id"]
+				},
+                {
+					"name": "update product",
+					"id": "update_product",
+					"slug": "/update/product",
+                    "httpMethod": "post",
+					"type": "update",
+					"relatedEntity": "product",
+                    "attributes": ["product_id", "product_name", "product_price", "product_description", "productCate_id"]
+				},
+                {
+					"name": "delete product",
+					"id": "delete_product",
+					"slug": "/delete/product",
+                    "httpMethod": "post",
+					"type": "delete",
+					"relatedEntity": "product",
+                    "attributes": ["product_id"]
+				}
+			]
+		},
+        {
+			"name": "Product Category",
+			"id": "product_cate",
+			"APIs": [
+				{
+					"name": "select product category",
+					"id": "select_productCate",
+					"slug": "/select/productCate",
+                    "httpMethod": "get",
+					"type": "select",
+					"relatedEntity": "productCate",
+                    "attributes": ["productCate_id"]
+				},
+                {
+					"name": "insert product category",
+					"id": "insert_productCate",
+					"slug": "/insert/productCate",
+                    "httpMethod": "post",
+					"type": "insert",
+					"relatedEntity": "productCate",
+                    "attributes": ["productCate_id", "productCate_name", "productCate_description"]
+				},
+                {
+					"name": "update product category",
+					"id": "update_productCate",
+					"slug": "/update/productCate",
+                    "httpMethod": "post",
+					"type": "update",
+					"relatedEntity": "productCate",
+                    "attributes": ["productCate_id", "productCate_name", "productCate_description"]
+				},
+                {
+					"name": "delete product category",
+					"id": "delete_productCate",
+					"slug": "/delete/productCate",
+                    "httpMethod": "post",
+					"type": "delete",
+					"relatedEntity": "productCate",
+                    "attributes": ["productCate_id"]
+				}
+			]
+		},
+        {
+			"name": "Order",
+			"id": "order",
+			"APIs": [
+				{
+					"name": "select order",
+					"id": "select_order",
+					"slug": "/select/order",
+                    "httpMethod": "get",
+					"type": "select",
+					"relatedEntity": "order",
+                    "attributes": ["order_id"]
+				},
+                {
+					"name": "list order",
+					"id": "list_order",
+					"slug": "/list/order",
+                    "httpMethod": "get",
+					"type": "select",
+					"relatedEntity": "order",
+                    "attributes": []
+				},
+                {
+					"name": "list order with status",
+					"id": "list_order_with_status",
+					"slug": "/list/order/status",
+                    "httpMethod": "get",
+					"type": "select",
+					"relatedEntity": "order",
+                    "attributes": ["order_status"]
+				},
+                {
+					"name": "insert order",
+					"id": "insert_order",
+					"slug": "/insert/order",
+                    "httpMethod": "post",
+					"type": "insert",
+					"relatedEntity": "order",
+                    "attributes": [
+                        "order_id",
+                        "order_customer_name",
+                        "order_customer_phone",
+                        "order_customer_address",
+                        "order_payment_method",
+                        "order_shipping_method",
+                        "order_date",
+                        "order_details",
+                        "order_status"
+                    ]
+				},
+                {
+					"name": "update order",
+					"id": "update_order",
+					"slug": "/update/order",
+                    "httpMethod": "post",
+					"type": "update",
+					"relatedEntity": "order",
+                    "attributes": [
+                        "order_id",
+                        "order_customer_name",
+                        "order_customer_phone",
+                        "order_customer_address",
+                        "order_payment_method",
+                        "order_shipping_method",
+                        "order_date",
+                        "order_details",
+                        "order_status"
+                    ]
+				},
+                {
+					"name": "delete order",
+					"id": "delete_order",
+					"slug": "/delete/order",
+                    "httpMethod": "post",
+					"type": "delete",
+					"relatedEntity": "order",
+                    "attributes": ["order_id"]
+				}
+			]
+		}
+	]
+}

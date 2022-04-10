@@ -1,0 +1,59 @@
+{
+	"name": "website",
+	"id": "website",
+	"modules": [
+		{
+			"name": "Page",
+			"id": "page",
+			"APIs": [
+				{
+					"name": "select page",
+					"id": "select_page",
+					"slug": "/select/page",
+                    "httpMethod": "get",
+					"type": "select",
+					"relatedEntity": "Page",
+					"attributes": ["page_title", "page_content"],
+					"constraints": ["page_id"]
+				},
+                {
+					"name": "insert page",
+					"id": "insert_page",
+					"slug": "/insert/page",
+                    "httpMethod": "post",
+					"type": "insert",
+					"relatedEntity": "Page",
+                    "attributes": ["page_slug", "page_title", "page_content"]
+				},
+                {
+					"name": "update page",
+					"id": "update_page",
+					"slug": "/update/page",
+                    "httpMethod": "post",
+					"type": "update",
+					"relatedEntity": "Page",
+                    "attributes": ["page_slug", "page_title", "page_content"],
+					"constraints": ["page_id"]
+				},
+                {
+					"name": "delete page",
+					"id": "delete_page",
+					"slug": "/delete/page",
+                    "httpMethod": "post",
+					"type": "delete",
+					"relatedEntity": "Page",
+					"constraints": ["page_id"]
+				},
+				{
+					"name": "get menu",
+					"id": "get_menu",
+					"slug": "/get/menu",
+                    "httpMethod": "get",
+					"type": "select",
+					"relatedEntity": "Page",
+					"attributes": ["page_slug", "page_title"]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,15 @@
+Generate api to insert a Page containing ID, title, content and slug;ID,title,content,slug;attribute
+Create an API which allow user to add a Page containing ID, title, content and slug;ID,title,content,slug;attribute
+An API which can setup a Page containing ID, title, content and slug;ID,title,content,slug;attribute
+Please generate an API to delete a Page by ID;ID;attribute
+Provide an API to remove a Page by title;title;attribute
+Please generate an API which allow user to cut a Page by slug;slug;attribute
+Please generate an API which allow user to find a Page by ID;ID;attribute
+Generate api to insert page containing ID, title, content and slug;ID,title,content,slug;attribute
+Create an API which allow user to add product containing ID, name, price and product category;ID,name,price,product category;attribute
+Create an API which allow user to add company by ID, name and description;ID,name,description;attribute
+Create an API to modify employee by ID;ID;attribute
+Generate api to insert product category containing ID, title, content and slug;ID,title,content,slug;attribute
+Create an API which allow user to add website containing ID, name and description;ID,name,description;attribute
+Provide an API to delete user by ID;ID;enitity
+Provide an API to update order by order ID;order ID;attribute

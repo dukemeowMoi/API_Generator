@@ -1,0 +1,8 @@
+Generate api to insert page containing ID, title, content and slug;page;entity
+Create an API which allow user to add product containing ID, name, price and product category;product;entity
+Create an API which allow user to add company by ID, name and description;company;entity
+Create an API to modify employee by ID;employee;entity
+Generate api to insert product category containing ID, title, content and slug;product category;entity
+Create an API which allow user to add website containing ID, name, description;website;entity
+Provide an API to delete user by ID;user;enitity
+Provide an API to update order by order ID;order;entity

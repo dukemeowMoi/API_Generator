@@ -1,0 +1,12 @@
+Generate api to insert Page containing ID, title, content and slug;Page;entity
+Create an API which allow user to add Product containing ID, Name, Price and Product Category;Product;entity
+Create an API which allow user to add Product containing Product ID,Product Name,Product Price and Product Category;Product;entity
+Create an API which allow user to add Page containing ID, title, content and slug;Page;entity
+An API which can setup Page containing Page ID,Page title,Page content and Page slug;Page;entity
+Create an API which allow user to add Product Category containing ID, Category Name, and Category Desciption;Product Category;entity
+Please generate an API to delete company by ID;company;entity
+Please generate an API to delete company by Page ID;company;entity
+Provide an API to remove product by name;product;entity
+Provide an API to remove product by product name;product;entity
+Please generate an API which allow user to cut Page by page slug;Page;entity
+Please generate an API which allow user to cut Page by slug;Page;entity

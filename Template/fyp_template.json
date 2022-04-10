@@ -1,0 +1,24 @@
+{
+	"name": "(template name)",
+	"id": "(template id)",
+	"modules": [
+		{
+			"name": "(module name)",
+			"id": "(module id)",
+			"APIs": [
+				{
+					"name": "(API name)",
+					"id": "(API id)",
+					"slug": "(API slug)",
+                    "httpMethod": "(HTTP method: GET/POST)",
+					"type": "(API statement type: insert/update/delete/select)",
+					"relatedEntity": "(Related entity name)",
+                    "attributes": ["(attribute(s) of the related entity)"],
+					"constraints": ["(attribute(s) of the related entity)"]
+				}
+			]
+		}
+	]
+}
+
+

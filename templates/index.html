@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<head>
+    <title>API Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+    <style>
+        main{
+            background-color: #eee;
+        }
+        main > .container{
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        #templateInfo{
+            padding: 1rem 0;
+        }
+        #templateInfo h2{
+            font-size: 1.2rem;
+        }
+        #mainPanel{
+            flex: 1;
+            margin-bottom: 1rem;
+        }
+        #templatePanel{
+            height: 100%;
+            background-color: #fff;
+            padding: 1rem;
+        }
+        #templatePanel table td{
+            vertical-align: middle;
+        }
+        #formPanel{
+            height: 100%;
+            background-color: #ddd;
+            padding: 1rem;
+        }
+
+        #APIForm{
+            height: 100%;
+            overflow: auto;
+        }
+        
+        #APIForm *{
+            font-size: 1rem;
+        }
+        #APIForm_header{
+            padding: 0.5rem 0;
+        }
+        #APIForm h3{
+            font-size: 1.3rem;
+            margin-bottom: 0px;
+        }
+        #APIForm .form-help {
+            font-size: 0.7rem;
+        }
+    </style>
+    <main>
+    <div class="container">
+        <header class="d-flex justify-content-center py-3 border-bottom">
+            <a href="/" style="width: 25%" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <span class="fs-4">API Generator</span>
+            </a>
+            <div class="input-group">
+                <label for="connectorType" class="input-group-text">Connector Type</label>
+                <select id="connectorType" class="form-select">
+                    <option selected value="mySQL">MySQL</option>
+                    <option value="mongoDB">MongoDB</option>
+                </select>
+            </div>
+        </header>
+        <div class="row" id="templateInfo">
+            <div class="col-sm-6 d-flex align-items-center flex-wrap">
+                <h2 class="col-sm-6">Template Name: <span id="templateName">N/A</span></h2>
+                <h2 class="col-sm-6">Template ID: <span id="templateId">N/A</span></h2>
+                <div class="col-sm-12 input-group">
+                    <label for="currModule" class="input-group-text">Current Module: </label>
+                    <select class="form-select" id="currModule">
+                        <option selected value="">select a module</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6 d-flex justify-content-end align-items-center">
+                <input style="opacity: 0; position: absolute;" type="file" id="templateUpload"/>
+                <div class="btn-group">
+                    <a href="#" id="uploadBtn" class="btn btn-secondary">Upload Template</a>
+                    <a href="#" id="saveTemplateBtn" class="btn btn-success">Save Template</a>
+                    <a href="#" id="generateCodeBtn" class="btn btn-primary">Generate Code</a>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="mainPanel">
+            <div class="col-sm-7" id="templatePanel">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>API Name</th>
+                            <th>API ID</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="apiList">
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-5" id="formPanel">
+                <form id="APIForm">
+                    <div id="APIForm_header" class="d-flex justify-content-between align-items-center">
+                        <h3>API form</h3>
+                        <button id="speechToggleBtn" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#speechModal">By Speech</button>
+                    </div>
+                    <div class="mb-3 input-group">
+                      <label for="apiName" class="input-group-text">API Name</label>
+                      <input type="text" class="form-control" id="apiName">
+                    </div>
+                    <div class="mb-3 input-group">
+                        <label for="apiID" class="input-group-text">API ID</label>
+                        <input type="text" class="form-control" id="apiId">
+                    </div>
+                    <div class="mb-3 input-group"> 
+                        <label for="apiID" class="input-group-text">API Slug</label>
+                        <input type="text" class="form-control" id="apiSlug" placeholder="/index">
+                    </div>
+                    <div class="mb-3 input-group">
+                        <label for="apiID" class="input-group-text">API HTTP Method</label>
+                        <select class="form-select" id="apiHttpMethod">
+                            <option selected value="get">Get</option>
+                            <option value="post">Post</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 input-group">
+                        <label for="apiID" class="input-group-text">API Type</label>
+                        <select class="form-select" id="apiType">
+                            <option selected value="select">Select</option>
+                            <option value="insert">Insert</option>
+                            <option value="update">Update</option>
+                            <option value="delete">Delete</option>
+                          </select>
+                    </div>
+                    <div class="mb-3 input-group">
+                        <label for="apiRelatedEntity" class="input-group-text">API Related Entity</label>
+                        <input type="text" class="form-control" id="apiRelatedEntity">
+                    </div>
+                    <div class="mb-3 input-group">
+                        <label for="attributes" class="input-group-text">API Attributes</label>
+                        <input type="text" class="form-control" id="apiAttributes" placeholder="Name,Id">
+                        <div class="form-help form-text">Please seperate the attributes by comma(,) if more than one attributes are provided.</div>
+                    </div>
+                    <div class="mb-3 input-group">
+                        <label for="constraints" class="input-group-text">API Constraints</label>
+                        <input type="text" class="form-control" id="apiConstraints" placeholder="Name,Id">
+                        <div class="form-help form-text">Please seperate the constraints by comma(,) if more than one constraints are provided.</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="#" id="formAddBtn" class="btn btn-success">Add</a>
+                        <a href="#" id="formSaveBtn" class="btn btn-secondary">Save</a>
+                        <a href="#" id="formResetBtn" class="btn btn-danger">Reset</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="speechModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Speech Recognition</h5>
+              <button type="button" id="closeModalBtn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <textarea id="SRresult" class="form-control"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="startRBtn" class="btn btn-primary">Start Recognition</button>
+                <button type="button" id="NLPBtn" class="btn btn-success">NLP Analysis</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</main>
+</body>
+<script>
+    var currModule = "sampleModule1";
+    var currApi = [];
+    var templateData = {
+        name: "N/A",
+        id: "N/A",
+        modules: [
+            {
+                name: "Sample module",
+                id: "sampleModule1",
+                APIs:[]
+            }
+        ]
+    };
+    function initData(){
+        $('#templateName').html(templateData["name"]);
+        $('#templateId').html(templateData["id"]);
+        $('#currModule').html("");
+        templateData['modules'].forEach(apiModule => {
+            $('#currModule').append($('<option>', { 
+                value: apiModule["id"],
+                text : apiModule["name"]
+            }))
+        });
+    }
+
+    function initFormValue(){
+        $('#apiName').val(currApi['name']);
+        $('#apiId').val(currApi['id'])
+        $('#apiSlug').val(currApi['slug'])
+        $('#apiHttpMethod').val(currApi['httpMethod'])
+        $('#apiType').val(currApi['type'])
+        $('#apiRelatedEntity').val(currApi['relatedEntity'])
+        $('#apiAttributes').val(currApi['attributes'].join(","))
+        $('#apiConstraints').val(currApi['constraints'].join(","))
+    }
+
+    function clearFormValue(){
+        $('#apiName').val("");
+        $('#apiId').val("")
+        $('#apiSlug').val("")
+        $('#apiHttpMethod').val("")
+        $('#apiType').val("")
+        $('#apiRelatedEntity').val("")
+        $('#apiAttributes').val("")
+        $('#apiConstraints').val("")
+    }
+
+    var apiRowTemplate = '<tr><td>[apiName]</td><td>[apiId]</td><td><a class="btn btn-secondary apiEditBtn" data-id="[apiId]">Edit</a></td><td><a class="btn btn-danger apiDeleteBtn" data-id="[apiId]">Delete</a></td></tr>'
+    function updateApiTable(){
+        var apiList = templateData['modules'].find(apiModule => apiModule['id'] == currModule)['APIs'];
+        console.log(apiList);
+        $('#apiList').html("");
+        var htmlRet = "";
+        apiList.forEach(api => {
+            var rowTemp = apiRowTemplate;
+            rowTemp = rowTemp.replace('[apiName]', api['name']);
+            rowTemp = rowTemp.replace('[apiId]', api['id']);
+            rowTemp = rowTemp.replace('[apiId]', api['id']);
+            rowTemp = rowTemp.replace('[apiId]', api['id']);
+            htmlRet += rowTemp;
+        })
+        $('#apiList').html(htmlRet);
+        $('.apiEditBtn').off('click').on('click', function(e){
+            var apiId = $(this).data('id');
+            var targetModule = templateData.modules.find(apiModule => apiModule['id'] == currModule);
+            currApi = targetModule.APIs.find(api => api['id'] == apiId);
+            initFormValue();
+        })
+        $('.apiDeleteBtn').off('click').on('click', function(e){
+            var apiId = $(this).data('id');
+            $(this).closest('tr').remove();
+            var targetModule = templateData.modules.find(apiModule => apiModule['id'] == currModule);
+            var newApiList = targetModule['APIs'].filter(api => api['id'] != apiId);
+            targetModule['APIs'] = newApiList;
+            console.log(templateData);
+        })
+    }
+
+    $(document).ready(function(){
+        let speechRecognition = new webkitSpeechRecognition();
+        speechRecognition.continuous = true;
+        speechRecognition.interimResults = true;
+        speechRecognition.lang = "en-us";
+        let result = "";
+
+        speechRecognition.onresult = (event) => {
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    result += event.results[i][0].transcript;
+                }else {
+                    $("#SRresult").val($("#SRresult").val() + event.results[i][0].transcript);
+                }
+            }
+            $("#SRresult").val(result);
+        };
+
+        speechRecognition.onstart = (event) => {
+            result = ""
+        }
+
+        $('#speechToggleBtn').click(function(){
+            $('#SRresult').val("")
+        })
+        $('#startRBtn').click(function(){
+            if ($(this).hasClass("btn-danger")){
+                speechRecognition.stop();
+                $(this).removeClass("btn-danger");
+                $(this).addClass("btn-primary");
+                $(this).html("Start Recognition");
+            }else {
+                speechRecognition.start();
+                $(this).addClass("btn-danger");
+                $(this).removeClass("btn-primary");
+                $(this).html("Stop Recognition");
+            }
+        })
+        $('#NLPBtn').click(function(e){
+            let value = $("#SRresult").val();
+            console.log(value);
+            $.post("/getNLPResult", {text:value}, function(data){
+                if (data['status'] == true){
+                    currApi = data['data'];
+                    $('#closeModalBtn').click();
+                    initFormValue();
+                }else {
+                    alert(data['data'])
+                }
+            })
+        })
+        $('#uploadBtn').click(function(e){
+            $('#templateUpload').trigger('click');
+        })
+        $('#templateUpload').change(function(){
+            var file = $(this)[0].files[0];
+            var formData = new FormData();
+            formData.append("file", file);
+            $.ajax({
+                type: "POST",
+                url: "/getTemplateDetail",
+                success: function (data) {
+                    templateData = data;
+                    initData();
+                    currModule = templateData.modules[0].id;
+                    updateApiTable();
+                },
+                error: function (error) {
+                    
+                },
+                async: true,
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                timeout: 60000
+            })
+        })
+
+        $('#currModule').change(function(e){
+            currModule = $(this).val();
+            updateApiTable();
+        })
+
+        $('#formResetBtn').click(function(){
+            initFormValue();
+        })
+
+        $('#formAddBtn').click(function(){
+            var apiObj = {
+                name:$('#apiName').val(),
+                id: $('#apiId').val(),
+                slug: $('#apiSlug').val(),
+                httpMethod: $('#apiHttpMethod').val(),
+                type: $('#apiType').val(),
+                relatedEntity: $('#apiRelatedEntity').val(),
+                attributes: $('#apiAttributes').val().split(","),
+                constraints: $('#apiConstraints').val().split(",")
+            }
+            var targetModule = templateData.modules.find(apiModule => apiModule['id'] == currModule);
+            targetModule['APIs'].push(apiObj);
+            clearFormValue();
+            currApi = [];
+            updateApiTable();
+            alert("Add Success");
+        })
+
+        $('#formSaveBtn').click(function(){
+            var apiObj = {
+                name:$('#apiName').val(),
+                id: $('#apiId').val(),
+                slug: $('#apiSlug').val(),
+                httpMethod: $('#apiHttpMethod').val(),
+                type: $('#apiType').val(),
+                relatedEntity: $('#apiRelatedEntity').val(),
+                attributes: $('#apiAttributes').val().split(","),
+                constraints: $('#apiConstraints').val().split(",")
+            }
+            var targetModule = templateData.modules.find(apiModule => apiModule['id'] == currModule);
+            var index = targetModule.APIs.indexOf(targetModule.APIs.find(api => api['id'] == currApi["id"]));
+            targetModule.APIs.splice(index, 1, apiObj);
+            currApi = apiObj;
+            updateApiTable();
+            alert("Save Success");
+        })
+
+        $('#saveTemplateBtn').click(function(){
+            const aElement = document.createElement('a');
+            const type = name.split(".").pop();
+            aElement.href = URL.createObjectURL( new Blob([JSON.stringify(templateData)], { type:'application/json' }) );
+            aElement.download = templateData.name.replace(" ", "_") + ".json";
+            aElement.click();
+        })
+
+        $('#generateCodeBtn').click(function(){
+            $.post("/generateCode", JSON.stringify({"connector": $('#connectorType').val(),"data":templateData}), function(data){
+                location.href = data
+            })
+        })
+
+        initData();
+    })
+</script>
+</html>
